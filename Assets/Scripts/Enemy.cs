@@ -26,8 +26,20 @@ public class Enemy : MonoBehaviour
     {                                                          // b
         bndCheck = GetComponent<BoundsCheck>();
     }
-
-    void Update()
+    void OnCollisionEnter(Collision coll)
+    {
+        GameObject otherGO = coll.gameObject;                                  // a
+        if (otherGO.tag == "ProjectileHero")
+        {                               // b
+            Destroy(otherGO);        // Destroy the Projectile
+            Destroy(gameObject);     // Destroy this Enemy GameObject
+        }
+        else
+        {
+            print("Enemy hit by non-ProjectileHero: " + otherGO.name);     // c
+        }
+    }
+        void Update()
     {
         Move();
         if (bndCheck != null && bndCheck.offDown)
